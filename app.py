@@ -17,7 +17,7 @@ logger.add(
 )
 logger.add(
     sys.stdout,
-    format="<black><bg white> {time:HH:mm:ss} </bg white></black><black><bg orange>  {level}  </bg orange></black> {message}",
+    format="<black><bg white> {time:HH:mm:ss} </bg white></black><black><bg #FFA500>  {level}  </bg #FFA500></black> {message}",
     level="WARNING",
     colorize=True
 )
