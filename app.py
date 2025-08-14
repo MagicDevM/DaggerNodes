@@ -1,5 +1,6 @@
 import discord
 import asyncio
+import sys
 import os
 from loguru import logger
 from dotenv import load_dotenv
@@ -9,9 +10,22 @@ from discord import embeds, guild, client, Intents
 logger.remove()
 
 logger.add(
-    sink=lambda msg: print(msg, end=""),
-    format="<green>{time:HH:mm:ss}</green> | <green><bg #00ff00>{level}</bg #00ff00></back> | {message}",
-    level="INFO"
+    sys.stdout,
+    format="<black><bg white> {time:HH:mm:ss} </bg white></black><black><bg green>  {level}  </bg green></black> {message}",
+    level="INFO",
+    colorize=True
+)
+logger.add(
+    sys.stdout,
+    format="<black><bg white> {time:HH:mm:ss} </bg white></black><black><bg orange>  {level}  </bg orange></black> {message}",
+    level="WARN",
+    colorize=True
+)
+logger.add(
+    sys.stdout,
+    format="<black><bg white> {time:HH:mm:ss} </bg white></black><black><bg red>  {level}  </bg red></black> {message}",
+    level="ERROR",
+    colorize=True
 )
 
 env_path = os.path.dirname(os.path.abspath(__file__))
