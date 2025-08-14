@@ -6,7 +6,13 @@ from dotenv import load_dotenv
 from discord.ext import commands
 from discord import embeds, guild, client, Intents
 
+logger.remove()
 
+logger.add(
+    sink=lambda msg: print(msg, end=""),
+    format="<green>{time:HH:mm:ss}</green> | <green><bg #00ff00>{level}</bg #00ff00></back> | {message}",
+    level="INFO"
+)
 
 env_path = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(env_path, ".env"))
