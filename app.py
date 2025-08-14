@@ -18,7 +18,7 @@ logger.add(
 logger.add(
     sys.stdout,
     format="<black><bg white> {time:HH:mm:ss} </bg white></black><black><bg orange>  {level}  </bg orange></black> {message}",
-    level="WARN",
+    level="WARNING",
     colorize=True
 )
 logger.add(
@@ -42,7 +42,7 @@ async def on_ready():
       logger.info(f'Successfully synced {len(synced_commands)} commands.')
     except Exception as error:
      pass
-    logger.info("{0.user} bot is now online".format(client))
+    logger.info("{0.user} bot is now online")
 
 async def load_cogs():
     for root, dirs, files in os.walk("cogs"):
