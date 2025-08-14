@@ -42,7 +42,7 @@ async def on_ready():
       logger.info(f'Successfully synced {len(synced_commands)} commands.')
     except Exception as error:
      pass
-    logger.info("{0.user} bot is now online")
+    logger.info("{0.user} bot is now online".format(client))
 
 async def load_cogs():
     for root, dirs, files in os.walk("cogs"):
