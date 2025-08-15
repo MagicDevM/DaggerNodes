@@ -54,10 +54,9 @@ class Economy(commands.Cog):
             member = ctx.author
         cursor = self.client.cursor
         conn = self.client.conn
-        cursor.execute("UPDATE economy SET balance = ? WHERE user_id = ?", (amount ,member.id))
-        results = cursor.fetchone()
-        if results is None:
-            cursor.execute("INSERT INTO economy (user_id, balance) VALUES (?, ?)", (member.id, amount))
+        cursor.execute("""INSERT INTO economy (user_id, balance) VALUES (?, ?) ON CONFLICT(user_id) DO UPDATE SET balance = excluded.balance
+""", (member.id, amount))
+        
         conn.commit()
         await ctx.send(f"Successfully updated **{member.name}'s** balance to __${amount}__")
     
