@@ -1,5 +1,6 @@
 import discord
 import asyncio
+import sqlite3
 import sys
 import os
 from loguru import logger
@@ -28,11 +29,24 @@ logger.add(
     colorize=True
 )
 
+conn = sqlite3.connect('databases/economy.db')
+cursor = conn.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS economy (
+    user_id INTEGER PRIMARY KEY,
+    balance INTEGER DEFAULT 0
+)
+""")
+conn.commit()
+
 env_path = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(env_path, ".env"))
 
 intents = discord.Intents.all()
 client = commands.Bot(command_prefix='dn!', help_command=None, intents=intents)
+client.conn = conn
+client.cursor = cursor
 
 @client.event
 async def on_ready():
