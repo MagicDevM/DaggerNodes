@@ -10,7 +10,7 @@ class General(commands.Cog):
         await ctx.send(f'Pong! **{round(self.client.latency * 1000)}ms**')
     @commands.hybrid_command(name="help", description="help command.")
     async def help(self, ctx):
-        help = discord.Embed(title="List of all commands", description="Supported types: **message** & **application commands**\n\n__General__:\ndn!help\ndn!ping\n\n__Economy__:\ndn!bal\ndn!add (admin only)\ndn!set (admin only)", colour=discord.Colour.orange())
+        help = discord.Embed(title="List of all commands", description="Supported types: **message** & **application commands**\n\n__General__:\ndn!help\ndn!ping\n\n__Economy__:\ndn!eco bal\ndn!eco add (admin only)\ndn!eco set (admin only)", colour=discord.Colour.orange())
         help.set_footer(text=f"requested by {ctx.author.name}", icon_url=ctx.author.display_avatar.url)
         await ctx.send(embed=help)
 
