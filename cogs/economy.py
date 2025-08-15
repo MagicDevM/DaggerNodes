@@ -6,8 +6,13 @@ from discord.ext import commands
 class Economy(commands.Cog):
     def __init__(self, client):
         self.client = client
+    
+    @commands.hybrid_group()
+    async def eco(self, ctx):
+        if ctx.invoked_subcommand is None:
+            await ctx.send("Please specify a subcommand.")
         
-    @commands.hybrid_command(name="balance", description="Check you're balance.")
+    @eco.command(name="balance", description="Check you're balance.")
     @commands.guild_only()
     async def balance(self, ctx, member: typing.Optional[discord.Member]):
         if member is None:
@@ -26,7 +31,7 @@ class Economy(commands.Cog):
         bal.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.display_avatar.url)
         await ctx.send(embed=bal)
     
-    @commands.hybrid_command(name="add", description="adds a certain amount to you're balance.")
+    @eco.command(name="add", description="adds a certain amount to you're balance.")
     @commands.guild_only()
     @commands.has_permissions(manage_guild=True)
     async def add(self, ctx, member: typing.Optional[discord.Member] ,amount: int):
@@ -46,7 +51,7 @@ class Economy(commands.Cog):
         conn.commit()
         await ctx.send(f"Successfully updated **{member.name}'s** balance to __${total_balance}__")
     
-    @commands.hybrid_command(name="set", description="sets the balance of a user to an certain amount.")
+    @eco.command(name="set", description="sets the balance of a user to an certain amount.")
     @commands.guild_only()
     @commands.has_permissions(manage_guild=True)
     async def set(self, ctx, member: typing.Optional[discord.Member] ,amount: int):
@@ -60,7 +65,7 @@ class Economy(commands.Cog):
         conn.commit()
         await ctx.send(f"Successfully updated **{member.name}'s** balance to __${amount}__")
     
-    @commands.command(name="bal", description="Check you're balance.")
+    @eco.command(name="bal", description="Check you're balance.")
     @commands.guild_only()
     async def bal(self, ctx, member: typing.Optional[discord.Member]):
         if member is None:
