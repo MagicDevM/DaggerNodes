@@ -25,7 +25,7 @@ class Economy(commands.Cog):
         bal.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.display_avatar.url)
         await ctx.send(embed=bal)
     
-    @commands.hybrid_command(name="add", description="adds a certain ammount to you're balance.")
+    @commands.hybrid_command(name="add", description="adds a certain amount to you're balance.")
     @commands.has_permissions(manage_guild=True)
     async def add(self, ctx, member: typing.Optional[discord.Member] ,amount: int):
         if member is None:
@@ -35,16 +35,16 @@ class Economy(commands.Cog):
         cursor.execute('SELECT balance FROM economy WHERE user_id = ?', (member.id,))
         results = cursor.fetchone()
         if results is None:
-            cursor.execute("INSERT INTO economy (user_id, balance) VALUES (?, ?)", (member.id, 0))
+            cursor.execute("INSERT INTO economy (user_id, balance) VALUES (?, ?)", (member.id, total_balance))
             conn.commit()
             total_balance = amount
         else:
             balance = results[0]
             total_balance = balance + amount
         cursor.execute("UPDATE economy SET balance = ? WHERE user_id = ?", (total_balance ,member.id))
+        conn.commit()
         await ctx.send(f"Successfully updated **{member.name}'s** balance to __${total_balance}__")
         
-    
     @commands.command(name="bal", description="Check you're balance.")
     async def bal(self, ctx, member: typing.Optional[discord.Member]):
         if member is None:
