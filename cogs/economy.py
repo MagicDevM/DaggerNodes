@@ -35,14 +35,13 @@ class Economy(commands.Cog):
         cursor.execute('SELECT balance FROM economy WHERE user_id = ?', (member.id,))
         results = cursor.fetchone()
         if results is None:
-            cursor.execute("INSERT INTO economy (user_id, balance) VALUES (?, ?)", (member.id, total_balance))
-            conn.commit()
             total_balance = amount
+            cursor.execute("INSERT INTO economy (user_id, balance) VALUES (?, ?)", (member.id, total_balance))
         else:
             balance = results[0]
             total_balance = balance + amount
             cursor.execute("UPDATE economy SET balance = ? WHERE user_id = ?", (total_balance ,member.id))
-            conn.commit()
+        conn.commit()
         await ctx.send(f"Successfully updated **{member.name}'s** balance to __${total_balance}__")
     
     @commands.hybrid_command(name="set", description="sets the balance of a user to an certain amount.")
