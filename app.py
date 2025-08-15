@@ -44,13 +44,13 @@ env_path = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(env_path, ".env"))
 
 intents = discord.Intents.all()
-client = commands.Bot(command_prefix='dn!', help_command=None, intents=intents)
+activity = discord.Activity(type=discord.ActivityType.watching, name="DaggerNodes host now!")
+client = commands.Bot(command_prefix='dn!', help_command=None, activity=activity, intents=intents)
 client.conn = conn
 client.cursor = cursor
 
 @client.event
 async def on_ready():
-    activity = discord.Game(name="DaggerNodes host now!")
     try:
       synced_commands = await client.tree.sync()
       logger.info(f'Successfully synced {len(synced_commands)} commands.')
