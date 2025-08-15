@@ -8,13 +8,15 @@ class Economy(commands.Cog):
         self.client = client
         
     @commands.hybrid_command(name="balance", description="Check you're balance.")
-    async def balance(self, ctx):
+    async def balance(self, ctx, member: typing.Optional[discord.Member]):
+        if member is None:
+            member = ctx.author
         cursor = self.client.cursor
         conn = self.client.conn
-        cursor.execute('SELECT balance FROM economy WHERE user_id = ?', (ctx.author.id,))
+        cursor.execute('SELECT balance FROM economy WHERE user_id = ?', (member.id,))
         results = cursor.fetchone()
         if results is None:
-            cursor.execute("INSERT INTO economy (user_id, balance) VALUES (?, ?)", (ctx.author.id, 0))
+            cursor.execute("INSERT INTO economy (user_id, balance) VALUES (?, ?)", (member.id, 0))
             conn.commit()
             balance = 0
         else:
@@ -44,13 +46,15 @@ class Economy(commands.Cog):
         
     
     @commands.command(name="bal", description="Check you're balance.")
-    async def bal(self, ctx):
+    async def bal(self, ctx, member: typing.Optional[discord.Member]):
+        if member is None:
+            member = ctx.author
         cursor = self.client.cursor
         conn = self.client.conn
-        cursor.execute('SELECT balance FROM economy WHERE user_id = ?', (ctx.author.id,))
+        cursor.execute('SELECT balance FROM economy WHERE user_id = ?', (member.id,))
         results = cursor.fetchone()
         if results is None:
-            cursor.execute("INSERT INTO economy (user_id, balance) VALUES (?, ?)", (ctx.author.id, 0))
+            cursor.execute("INSERT INTO economy (user_id, balance) VALUES (?, ?)", (member.id, 0))
             conn.commit()
             balance = 0
         else:
@@ -58,5 +62,6 @@ class Economy(commands.Cog):
         bal = discord.Embed(title="Balance", description=f"__Balance__: **${balance}**", colour=discord.Colour.green())
         bal.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.display_avatar.url)
         await ctx.send(embed=bal)
+        
 async def setup(client):
     await client.add_cog(Economy(client))
