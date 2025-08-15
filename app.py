@@ -1,6 +1,6 @@
 import discord
 import asyncio
-import sqlite3
+import sqlite3 as sql
 import sys
 import os
 from loguru import logger
@@ -29,7 +29,7 @@ logger.add(
     colorize=True
 )
 
-conn = sqlite3.connect('databases/economy.db')
+conn = sql.connect('databases/economy.db')
 cursor = conn.cursor()
 
 cursor.execute("""
