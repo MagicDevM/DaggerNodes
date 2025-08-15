@@ -55,9 +55,7 @@ class Economy(commands.Cog):
         results = cursor.fetchone()
         if results is None:
             cursor.execute("INSERT INTO economy (user_id, balance) VALUES (?, ?)", (member.id, amount))
-            conn.commit()
-        else:
-            conn.commit()
+        conn.commit()
         await ctx.send(f"Successfully updated **{member.name}'s** balance to __${amount}__")
     
     @commands.command(name="bal", description="Check you're balance.")
