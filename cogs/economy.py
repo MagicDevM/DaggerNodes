@@ -21,7 +21,7 @@ class Economy(commands.Cog):
             balance = 0
         else:
             balance = results[0]
-        bal = discord.Embed(title="Balance", description=f"__Balance__: **${balance}**", colour=discord.Colour.green())
+        bal = discord.Embed(title="Balance", description=f"Balance: **${balance}**", colour=discord.Colour.green())
         bal.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.display_avatar.url)
         await ctx.send(embed=bal)
     
@@ -59,7 +59,7 @@ class Economy(commands.Cog):
             balance = 0
         else:
             balance = results[0]
-        bal = discord.Embed(title="Balance", description=f"__Balance__: **${balance}**", colour=discord.Colour.green())
+        bal = discord.Embed(title="Balance", description=f"Balance: **${balance}**", colour=discord.Colour.green())
         bal.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.display_avatar.url)
         await ctx.send(embed=bal)
         
