@@ -8,6 +8,8 @@ from dotenv import load_dotenv
 from discord.ext import commands
 from discord import embeds, guild, client, Intents
 
+os.makedirs("databases", exist_ok=True)
+
 logger.remove()
 
 logger.add(
