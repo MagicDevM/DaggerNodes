@@ -32,7 +32,7 @@ env_path = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(env_path, ".env"))
 
 intents = discord.Intents.all()
-client = commands.Bot(command_prefix='dn!', intents=intents)
+client = commands.Bot(command_prefix='dn!', help_command=None, intents=intents)
 
 @client.event
 async def on_ready():
