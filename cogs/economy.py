@@ -6,6 +6,8 @@ from discord.ext import commands
 class Economy(commands.Cog):
     def __init__(self, client):
         self.client = client
+
+
     
     @commands.hybrid_group()
     async def eco(self, ctx):
@@ -27,7 +29,8 @@ class Economy(commands.Cog):
             balance = 0
         else:
             balance = results[0]
-        bal = discord.Embed(title=f"{member.name}'s Balance", description=f"Balance: **${balance}**", colour=discord.Colour.green())
+        formatted_balance = f"₹{balance:,}"
+        bal = discord.Embed(title=f"{member.name}'s Balance", description=f"Balance: **{formatted_balance}**", colour=discord.Colour.green())
         bal.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.display_avatar.url)
         await ctx.send(embed=bal)
     
@@ -49,7 +52,8 @@ class Economy(commands.Cog):
             total_balance = balance + amount
             cursor.execute("UPDATE economy SET balance = ? WHERE user_id = ?", (total_balance ,member.id))
         conn.commit()
-        await ctx.send(f"Successfully updated **{member.name}'s** balance to __${total_balance}__")
+        formatted_balance = f"₹{total_balance:,}"
+        await ctx.send(f"Successfully updated **{member.name}'s** balance to __{formatted_balance}__")
     
     @eco.command(name="set", description="sets the balance of a user to an certain amount.")
     @commands.guild_only()
@@ -63,7 +67,8 @@ class Economy(commands.Cog):
 """, (member.id, amount))
         
         conn.commit()
-        await ctx.send(f"Successfully updated **{member.name}'s** balance to __${amount}__")
+        formatted_balance = f"₹{amount:,}"
+        await ctx.send(f"Successfully updated **{member.name}'s** balance to __{formatted_balance}__")
     
     @eco.command(name="bal", description="Check you're balance.")
     @commands.guild_only()
@@ -80,7 +85,8 @@ class Economy(commands.Cog):
             balance = 0
         else:
             balance = results[0]
-        bal = discord.Embed(title=f"{member.name}'s Balance", description=f"Balance: **${balance}**", colour=discord.Colour.green())
+        formatted_balance = f"₹{balance:,}"
+        bal = discord.Embed(title=f"{member.name}'s Balance", description=f"Balance: **{formatted_balance}**", colour=discord.Colour.green())
         bal.set_footer(text=f"Requested by {ctx.author.name}", icon_url=ctx.author.display_avatar.url)
         await ctx.send(embed=bal)
         
